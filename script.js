@@ -5,23 +5,24 @@ $(document).ready(function() {
         dayEnd: 18,
     };
 
+    let today = `<p>${moment().format("dddd, MMMM Do")}</p>`
+
     let hour = day.dayStart;
 
     let hours = [];
     
     let currentTime = moment().hour();
 
-    let eventObj = {}
+    let eventObj = {};
 
     let scheduledEvent = JSON.parse(localStorage.getItem("savedEvents"));
 
 
     // Sets #currentDay html to the current day in "day, month date" format
-    $("#currentDay").html(`<p>${moment().format("dddd, MMMM Do")}</p>`)
+    $("#currentDay").html(today)
 
     // Checks local storage for saved events. Returns an empty string for null and undefined values, else returns the event.
     function getEventValue() {
-
         if (scheduledEvent == null || scheduledEvent[`eventKey-${hour}`] == undefined) {
             return "";
         }
@@ -31,8 +32,7 @@ $(document).ready(function() {
     }
 
     // Generates hour values for hours[] based on the values of dayStart and dayEnd. Calls getEventValue()
-    function generateHours() {
-        
+    function generateHours() {    
         for (i = day.dayStart; i < day.dayEnd; i++) {
             hours.push({
                 time: hour,
@@ -46,7 +46,6 @@ $(document).ready(function() {
 
     // Renders a row for each hour with values from hours[]. Calls setTimeClass()
     function renderTimeBlocks(hoursData) {
-
         for (i = 0; i < hoursData.length; i++) {
             let timeblock = 
             `
@@ -68,24 +67,18 @@ $(document).ready(function() {
 
     renderTimeBlocks(hours);
 
-    // !BROKEN! this is supposed to set class to past, present, or future based on relationship to current time
-    function setTimeClass(validationTime) {
-        //let timeTense = moment([validationTime, "hours"])
-        //let timeDiff = validationTime.diff(currentTime)
-        let timeDiff = moment().diff(validationTime, currentTime);
-        
-        console.log(timeDiff)
-        if(timeDiff > 0) {
+    // Sets class of hour row to past, present, or future based on relationship to current time
+    function setTimeClass(tempTime) {
+        if(tempTime > currentTime) {
             return "future";
-        } else if( timeDiff == 0) {
-            return "present"
+        } else if( tempTime == currentTime) {
+            return "present";
         }
         return "past";
     }
 
     // Adds onclick events to each "save" button
     $("button").on('click', function(ev) {
-
         let eventId = ev.target.id
         let eventInput = {
             [`eventKey-${eventId}`]: $(`#input-${eventId}`).val()
@@ -97,6 +90,5 @@ $(document).ready(function() {
         localStorage.setItem("savedEvents", JSON.stringify(eventObj))
     })
     
-
 // End of script   
 })
