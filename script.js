@@ -50,8 +50,8 @@ $(document).ready(function() {
             let timeblock = 
             `
                 <div class="row p-2 ${setTimeClass(hoursData[i].time)}">
-                    <div id="hour-col" class="col-1">
-                        <span>${moment(hoursData[i].time, ["HH"]).format("h A")}</span>
+                    <div class="col-1 hour-col">
+                        <div>${moment(hoursData[i].time, ["HH"]).format("h:mm A")}</div>
                     </div>
                     <div class="col">
                         <input id="${`input-${hoursData[i].time}`}" class="form-control form-control-lg" type="text" placeholder="No Event Yet" value="${hoursData[i].event}">
@@ -78,8 +78,8 @@ $(document).ready(function() {
     }
 
     // Adds onclick events to each "save" button
-    $("button").on('click', function(ev) {
-        let eventId = ev.target.id
+    $("button").on('click', function() {
+        let eventId = $(this).attr('id')
         let eventInput = {
             [`eventKey-${eventId}`]: $(`#input-${eventId}`).val()
         }

@@ -20,6 +20,10 @@ body {
     padding: 2px;
   }
 
+  .hour-col div {
+    padding-top: 17px;
+  }
+
   .past {
     background-color: lightgrey;
   }
