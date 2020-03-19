@@ -26,6 +26,7 @@ body {
 
   .past {
     background-color: lightgrey;
+    pointer-events: none;
   }
 
   .present {

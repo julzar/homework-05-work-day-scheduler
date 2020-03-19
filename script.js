@@ -12,7 +12,7 @@ $(document).ready(function() {
     let hours = [];
     
     let currentTime = moment().hour();
-
+    
     let eventObj = {};
 
     let scheduledEvent = JSON.parse(localStorage.getItem("savedEvents"));
